@@ -15,6 +15,7 @@
             <nav>
                 <button id="nav-dashboard">대시보드</button>
                 <button id="nav-review">복습 덱</button>
+                <button id="nav-writing">글쓰기</button>
                 <button id="nav-lab">지식 연구소</button>
             </nav>
         </header>
@@ -22,33 +23,61 @@
         <main>
             <!-- ======================= DASHBOARD VIEW ======================= -->
             <div id="dashboard-view" class="view active">
-                <h2>작전 상황실</h2>
-                <div id="main-book-slot" class="card">
-                    <h3>메인북 슬롯 (Main Book Slot)</h3>
-                    <div id="main-book-content"></div>
+                <div class="dashboard-grid">
+                    <div class="main-column">
+                        <h2>작전 상황실</h2>
+                        <div id="main-book-slot" class="card">
+                            <h3>메인북 슬롯 (Main Book Slot)</h3>
+                            <div id="main-book-content"></div>
+                        </div>
+                        <div id="sub-book-shelf" class="card">
+                            <h3>서브북 선반 (Sub Book Shelf)</h3>
+                            <div id="sub-book-list"></div>
+                        </div>
+                         <button id="start-session-btn" class="cta-button" disabled>오늘의 메티스 세션 시작하기</button>
+                    </div>
+                    <div class="side-column">
+                        <h2>나의 여정</h2>
+                        <div id="journey-widget" class="card">
+                            <!-- Journey stats will be rendered here -->
+                        </div>
+                        <h2>새 책 추가</h2>
+                        <div id="add-book-form" class="card">
+                            <input type="text" id="book-title" placeholder="책 제목" required>
+                            <input type="text" id="book-cover" placeholder="표지 이미지 URL" required>
+                            <select id="book-type">
+                                <option value="main">메인북으로 설정</option>
+                                <option value="sub">서브북으로 추가</option>
+                            </select>
+                            <button id="add-book-btn">추가하기</button>
+                        </div>
+                    </div>
                 </div>
-                <div id="sub-book-shelf" class="card">
-                    <h3>서브북 선반 (Sub Book Shelf)</h3>
-                    <div id="sub-book-list"></div>
-                </div>
-                <div id="add-book-form" class="card">
-                    <h3>새 책 추가</h3>
-                    <input type="text" id="book-title" placeholder="책 제목" required>
-                    <input type="text" id="book-cover" placeholder="표지 이미지 URL" required>
-                    <select id="book-type">
-                        <option value="main">메인북으로 설정</option>
-                        <option value="sub">서브북으로 추가</option>
-                    </select>
-                    <button id="add-book-btn">추가하기</button>
-                </div>
-                 <button id="start-session-btn" class="cta-button" disabled>오늘의 메티스 세션 시작하기</button>
             </div>
 
             <!-- ======================= REVIEW DECK VIEW ======================= -->
             <div id="review-view" class="view">
                 <h2>장기기억 활성기 (Ebbinghaus Review Deck)</h2>
-                <div id="review-list" class="card">
-                    <!-- Review cards will be rendered here by JS -->
+                <div id="review-list" class="card"></div>
+            </div>
+
+            <!-- ======================= WRITING VIEW ======================= -->
+            <div id="writing-view" class="view">
+                <h2>지식의 대장간 (The Forge)</h2>
+                <div class="writing-layout card">
+                    <aside id="knowledge-sidebar">
+                        <h3>지식 조립기</h3>
+                        <div id="knowledge-cards-container"></div>
+                    </aside>
+                    <section id="writing-desk">
+                        <h3>글쓰기 데스크</h3>
+                        <input type="text" id="writing-title" placeholder="글 제목을 입력하세요...">
+                        <div class="writing-controls">
+                            <button id="ai-draft-btn">AI 초고 작성 (시뮬레이션)</button>
+                            <button id="save-asset-btn">자산으로 저장</button>
+                        </div>
+                        <textarea id="main-editor" placeholder="이곳에 글을 작성하거나, 왼쪽의 지식 카드를 클릭하여 내용을 추가하세요..."></textarea>
+                    </section>
                 </div>
             </div>
 
@@ -61,15 +90,9 @@
                 <div class="card">
                     <h3>목표 달성 보드</h3>
                     <div id="goal-board" class="kanban-board">
-                        <div class="kanban-column" id="todo-column" data-status="todo">
-                            <h4>진행 전</h4>
-                        </div>
-                        <div class="kanban-column" id="inprogress-column" data-status="in-progress">
-                            <h4>진행 중</h4>
-                        </div>
-                        <div class="kanban-column" id="completed-column" data-status="completed">
-                            <h4>달성 완료</h4>
-                        </div>
+                        <div class="kanban-column" id="todo-column" data-status="todo"><h4>진행 전</h4></div>
+                        <div class="kanban-column" id="inprogress-column" data-status="in-progress"><h4>진행 중</h4></div>
+                        <div class="kanban-column" id="completed-column" data-status="completed"><h4>달성 완료</h4></div>
                     </div>
                 </div>
                 <div class="card">
@@ -90,12 +113,23 @@
                 <option value="2">레벨 2: 주제 묶음 단위</option>
                 <option value="3">레벨 3: 저자의 관점 단위</option>
             </select>
-            <textarea id="goal-text" placeholder="이 책을 통해 무엇을 얻고 싶으신가요?
-(예: 선택 설계의 3요소 설명하기)"></textarea>
+            <textarea id="goal-text" placeholder="이 책을 통해 무엇을 얻고 싶으신가요? (예: 선택 설계의 3요소 설명하기)"></textarea>
             <button id="save-goal-btn">목표 저장</button>
+        </div>
+    </div>
+    
+    <!-- Curiosity Modal (NEW) -->
+    <div id="curiosity-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>🧠 호기심 촉진기</h3>
+            <p id="curiosity-question">AI의 예측 질문이 여기에 표시됩니다.</p>
+            <textarea id="curiosity-answer" placeholder="당신의 예측을 한 문장으로..."></textarea>
+            <button id="start-learning-btn">예측 완료 & 학습 시작</button>
         </div>
     </div>
 
     <script src="app.js"></script>
 </body>
 </html>
+

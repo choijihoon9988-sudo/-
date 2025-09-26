@@ -87,6 +87,12 @@ h3 {
 }
 
 /* Dashboard Styles */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
 #main-book-content {
     display: flex;
     gap: 20px;
@@ -145,8 +151,8 @@ h3 {
 
 #add-book-form {
     display: flex;
-    gap: 10px;
-    align-items: center;
+    flex-direction: column;
+    gap: 15px;
 }
 
 input[type="text"], select, textarea {
@@ -160,7 +166,7 @@ input[type="text"], select, textarea {
 }
 
 select {
-    width: auto;
+    width: 100%;
 }
 
 button {
@@ -190,188 +196,91 @@ button:disabled {
     margin-top: 20px;
 }
 
+/* Journey Widget Styles */
+#journey-widget {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+.stat-item .label {
+    font-size: 1rem;
+}
+.stat-item .value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
 /* Session View Styles */
 .session-stage {
     text-align: center;
     padding: 40px 20px;
 }
-
-.session-stage h3 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
 #timer-display {
     font-size: 6rem;
     font-weight: bold;
     color: var(--timer-color);
     margin: 20px 0;
 }
-
-.session-stage p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #aeb8c5;
-}
-
-.session-stage textarea {
-    height: 200px;
-    max-width: 800px;
-    margin: 0 auto 20px;
-    font-size: 1.1rem;
-}
-
 #comparison-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     text-align: left;
 }
-
-.comparison-column {
-    background-color: var(--secondary-bg);
-    padding: 20px;
-    border-radius: 12px;
-}
-
-.comparison-column h4 {
-    border-bottom: 1px solid var(--accent-color);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-}
-
-.comparison-column div {
-    white-space: pre-wrap;
-    line-height: 1.7;
-}
+.comparison-column { background-color: var(--secondary-bg); padding: 20px; border-radius: 12px; }
 
 /* Review Deck Styles */
-#review-list {
-    padding: 10px;
-}
-.review-card {
-    background-color: var(--card-bg);
-    border-left: 4px solid var(--accent-color);
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-.review-question {
-    cursor: pointer;
-}
-.review-question h4 {
-    font-size: 1.3rem;
-    margin-bottom: 5px;
-}
-.review-answer {
-    display: none;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px dashed var(--border-color);
-}
-.review-answer.visible {
-    display: block;
-}
-.review-answer-content {
-    background-color: var(--secondary-bg);
-    padding: 15px;
-    border-radius: 6px;
-    white-space: pre-wrap;
-}
-.review-answer-content strong {
-    color: var(--accent-color);
-}
-.review-controls {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-.review-btn {
-    flex-grow: 1;
-}
+#review-list { padding: 10px; }
+.review-card { background-color: var(--card-bg); border-left: 4px solid var(--accent-color); padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+.review-question { cursor: pointer; }
+.review-answer { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border-color); }
+.review-answer.visible { display: block; }
+.review-answer-content { background-color: var(--secondary-bg); padding: 15px; border-radius: 6px; white-space: pre-wrap; }
+.review-controls { margin-top: 20px; display: flex; justify-content: center; gap: 15px; }
+.review-btn { flex-grow: 1; }
 .review-btn.perfect { background-color: var(--success-color); }
 .review-btn.good { background-color: var(--warning-color); }
 .review-btn.forgot { background-color: var(--danger-color); }
 
+/* Writing View Styles */
+.writing-layout { display: grid; grid-template-columns: 300px 1fr; gap: 25px; height: 70vh; }
+#knowledge-sidebar { background-color: var(--primary-bg); padding: 15px; border-radius: 8px; overflow-y: auto; }
+#knowledge-cards-container { display: flex; flex-direction: column; gap: 10px; }
+.knowledge-card { background-color: var(--card-bg); padding: 12px; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; border-left: 3px solid var(--accent-color); }
+.knowledge-card:hover { background-color: #5f5f63; }
+.knowledge-card p { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#writing-desk { display: flex; flex-direction: column; }
+#writing-title { margin-bottom: 15px; font-size: 1.5rem; }
+.writing-controls { margin-bottom: 15px; display: flex; gap: 10px; }
+#main-editor { flex-grow: 1; resize: none; line-height: 1.7; }
 
 /* Knowledge Lab Styles */
-.kanban-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    min-height: 300px;
-}
-.kanban-column {
-    background-color: var(--card-bg);
-    padding: 15px;
-    border-radius: 8px;
-    transition: background-color 0.2s;
-}
-.kanban-column.drag-over {
-    background-color: #5f5f63;
-}
-.kanban-column h4 {
-    text-align: center;
-    margin-bottom: 15px;
-}
-.kanban-card {
-    background-color: var(--secondary-bg);
-    padding: 15px;
-    border-radius: 6px;
-    margin-bottom: 10px;
-    cursor: grab;
-    border-left: 3px solid var(--accent-color);
-}
-.kanban-card.dragging {
-    opacity: 0.5;
-}
-.kanban-card .level-badge {
-    font-size: 0.7rem;
-    margin-bottom: 5px;
-}
-
-#synapse-map {
-    width: 100%;
-    height: 500px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    background-color: var(--primary-bg);
-}
+.kanban-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; min-height: 300px; }
+.kanban-column { background-color: var(--card-bg); padding: 15px; border-radius: 8px; transition: background-color 0.2s; }
+.kanban-column.drag-over { background-color: #5f5f63; }
+.kanban-card { background-color: var(--secondary-bg); padding: 15px; border-radius: 6px; margin-bottom: 10px; cursor: grab; border-left: 3px solid var(--accent-color); }
+.kanban-card.dragging { opacity: 0.5; }
+#synapse-map { width: 100%; height: 500px; border: 1px solid var(--border-color); border-radius: 8px; background-color: var(--primary-bg); }
 
 /* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.7);
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.7); }
+.modal-content { background-color: var(--secondary-bg); margin: 15% auto; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; position: relative; }
+.close-button { color: #aaa; position: absolute; top: 15px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+.modal-content p { margin-bottom: 15px; line-height: 1.5; color: #aeb8c5;}
+.modal-content textarea { height: 80px; margin-bottom: 15px; }
+
+@media (max-width: 900px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .writing-layout { grid-template-columns: 1fr; height: auto; }
+    #knowledge-sidebar { height: 30vh; margin-bottom: 20px;}
 }
 
-.modal-content {
-    background-color: var(--secondary-bg);
-    margin: 15% auto;
-    padding: 30px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-}
-
-.close-button {
-    color: #aaa;
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.modal-content h3 { color: var(--text-color); }
-.modal-content select { margin-bottom: 15px; }
-.modal-content textarea { height: 120px; margin-bottom: 15px; }
