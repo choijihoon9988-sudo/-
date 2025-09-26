@@ -1,0 +1,377 @@
+:root {
+    --primary-bg: #1a1a1d;
+    --secondary-bg: #2b2b2e;
+    --card-bg: #4b4b4e;
+    --text-color: #f5f5f7;
+    --accent-color: #007aff;
+    --border-color: #636366;
+    --timer-color: #34c759;
+    --success-color: #30d158;
+    --warning-color: #ff9f0a;
+    --danger-color: #ff453a;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+#app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+nav button {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+nav button:hover {
+    background-color: var(--secondary-bg);
+}
+
+.view {
+    display: none;
+}
+
+.view.active {
+    display: block;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #aeb8c5;
+}
+
+.card {
+    background-color: var(--secondary-bg);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+
+/* Dashboard Styles */
+#main-book-content {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.book-cover {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+.book-info h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.book-goal {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.book-goal p {
+    font-style: italic;
+}
+
+.book-goal .level-badge {
+    display: inline-block;
+    background-color: var(--accent-color);
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+#sub-book-list {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 15px;
+}
+
+.sub-book-item {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sub-book-item .book-cover {
+    width: 100px;
+    height: 150px;
+}
+
+#add-book-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+input[type="text"], select, textarea {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+select {
+    width: auto;
+}
+
+button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: opacity 0.3s;
+}
+
+button:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.cta-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+
+/* Session View Styles */
+.session-stage {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.session-stage h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+#timer-display {
+    font-size: 6rem;
+    font-weight: bold;
+    color: var(--timer-color);
+    margin: 20px 0;
+}
+
+.session-stage p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #aeb8c5;
+}
+
+.session-stage textarea {
+    height: 200px;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    font-size: 1.1rem;
+}
+
+#comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    text-align: left;
+}
+
+.comparison-column {
+    background-color: var(--secondary-bg);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.comparison-column h4 {
+    border-bottom: 1px solid var(--accent-color);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.comparison-column div {
+    white-space: pre-wrap;
+    line-height: 1.7;
+}
+
+/* Review Deck Styles */
+#review-list {
+    padding: 10px;
+}
+.review-card {
+    background-color: var(--card-bg);
+    border-left: 4px solid var(--accent-color);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.review-question {
+    cursor: pointer;
+}
+.review-question h4 {
+    font-size: 1.3rem;
+    margin-bottom: 5px;
+}
+.review-answer {
+    display: none;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color);
+}
+.review-answer.visible {
+    display: block;
+}
+.review-answer-content {
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    border-radius: 6px;
+    white-space: pre-wrap;
+}
+.review-answer-content strong {
+    color: var(--accent-color);
+}
+.review-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+.review-btn {
+    flex-grow: 1;
+}
+.review-btn.perfect { background-color: var(--success-color); }
+.review-btn.good { background-color: var(--warning-color); }
+.review-btn.forgot { background-color: var(--danger-color); }
+
+
+/* Knowledge Lab Styles */
+.kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    min-height: 300px;
+}
+.kanban-column {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+.kanban-column.drag-over {
+    background-color: #5f5f63;
+}
+.kanban-column h4 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.kanban-card {
+    background-color: var(--secondary-bg);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: grab;
+    border-left: 3px solid var(--accent-color);
+}
+.kanban-card.dragging {
+    opacity: 0.5;
+}
+.kanban-card .level-badge {
+    font-size: 0.7rem;
+    margin-bottom: 5px;
+}
+
+#synapse-map {
+    width: 100%;
+    height: 500px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--primary-bg);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: var(--secondary-bg);
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close-button {
+    color: #aaa;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-content h3 { color: var(--text-color); }
+.modal-content select { margin-bottom: 15px; }
+.modal-content textarea { height: 120px; margin-bottom: 15px; }
