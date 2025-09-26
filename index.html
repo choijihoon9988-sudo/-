@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Metis: Knowledge Compounding Engine</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Vis.js Network Library for Synapse Map -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 </head>
 <body>
@@ -19,6 +20,7 @@
         </header>
 
         <main>
+            <!-- ======================= DASHBOARD VIEW ======================= -->
             <div id="dashboard-view" class="view active">
                 <h2>작전 상황실</h2>
                 <div id="main-book-slot" class="card">
@@ -42,14 +44,18 @@
                  <button id="start-session-btn" class="cta-button" disabled>오늘의 메티스 세션 시작하기</button>
             </div>
 
+            <!-- ======================= REVIEW DECK VIEW ======================= -->
             <div id="review-view" class="view">
                 <h2>장기기억 활성기 (Ebbinghaus Review Deck)</h2>
                 <div id="review-list" class="card">
-                    </div>
+                    <!-- Review cards will be rendered here by JS -->
+                </div>
             </div>
 
+            <!-- ======================= SESSION VIEW ======================= -->
             <div id="session-view" class="view"></div>
 
+            <!-- ======================= KNOWLEDGE LAB VIEW ======================= -->
             <div id="lab-view" class="view">
                 <h2>지식 연구소</h2>
                 <div class="card">
@@ -74,6 +80,7 @@
         </main>
     </div>
 
+    <!-- Goal Modal -->
     <div id="goal-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -91,4 +98,4 @@
 
     <script src="app.js"></script>
 </body>
-</html> 
+</html>
