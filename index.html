@@ -5,131 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Metis: Knowledge Compounding Engine</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Vis.js Network Library for Synapse Map -->
-    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
 </head>
 <body>
-    <div id="app">
-        <header>
-            <h1>Project Metis 🧠</h1>
+    <div class="app-container">
+        <aside class="sidebar">
+            <h1>Project Metis</h1>
             <nav>
-                <button id="nav-dashboard">대시보드</button>
-                <button id="nav-review">복습 덱</button>
-                <button id="nav-writing">글쓰기</button>
-                <button id="nav-lab">지식 연구소</button>
+                <button class="nav-btn active" data-view="dashboard">
+                    <span class="icon">🏠</span> 대시보드
+                </button>
+                <button class="nav-btn" data-view="ebbinghaus">
+                    <span class="icon">🌿</span> 지식 정원
+                </button>
+                <button class="nav-btn" data-view="knowledge-lab">
+                    <span class="icon">🔬</span> 지식 연구소
+                </button>
             </nav>
-        </header>
+        </aside>
 
-        <main>
-            <!-- ======================= DASHBOARD VIEW ======================= -->
-            <div id="dashboard-view" class="view active">
+        <main class="main-content">
+            <div id="dashboard" class="view active">
+                <header class="view-header">
+                    <h2>오늘의 지식 탐험</h2>
+                    <p>질문하고, 학습하고, 연결하여 지식을 복리로 쌓아가세요.</p>
+                </header>
                 <div class="dashboard-grid">
-                    <div class="main-column">
-                        <h2>작전 상황실</h2>
-                        <div id="main-book-slot" class="card">
-                            <h3>메인북 슬롯 (Main Book Slot)</h3>
-                            <div id="main-book-content"></div>
+                    <div id="main-book-slot" class="main-book-slot card">
+                        <h3>📘 메인북</h3>
+                        <div class="book-info">
+                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1593003033l/54495910.jpg" alt="넛지 책 표지" class="book-cover">
+                            <div class="book-details">
+                                <h4>넛지 (Nudge)</h4>
+                                <p>리처드 H. 탈러, 캐스 R. 선스타인</p>
+                                <div id="main-book-goal" class="goal">
+                                    <strong>🎯 현재 목표 (레벨 2)</strong>
+                                    <p>선택 설계의 3요소(디폴트, 피드백, 오류 예상)를 설명하고, 실생활 사례 1가지씩 찾아보기.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div id="sub-book-shelf" class="card">
-                            <h3>서브북 선반 (Sub Book Shelf)</h3>
-                            <div id="sub-book-list"></div>
-                        </div>
-                         <button id="start-session-btn" class="cta-button" disabled>오늘의 메티스 세션 시작하기</button>
+                        <button id="start-session-btn" class="btn btn-primary">오늘의 메티스 세션 시작하기</button>
                     </div>
-                    <div class="side-column">
-                        <h2>나의 여정</h2>
-                        <div id="journey-widget" class="card">
-                            <!-- Journey stats will be rendered here -->
+                    <div class="ai-assistant-slot card">
+                        <h3>🤖 AI 목표 내비게이터</h3>
+                        <p>책을 통해 무엇을 얻고 싶으신가요? AI가 최적의 학습 목표 설정을 도와드립니다.</p>
+                        <div class="book-title-input">
+                            <label for="book-title-for-goal">대상 도서:</label>
+                            <input type="text" id="book-title-for-goal" value="넛지 (Nudge)" placeholder="책 제목을 입력하세요">
                         </div>
-                        <h2>새 책 추가</h2>
-                        <div id="add-book-form" class="card">
-                            <input type="text" id="book-title" placeholder="책 제목" required>
-                            <input type="text" id="book-cover" placeholder="표지 이미지 URL" required>
-                            <select id="book-type">
-                                <option value="main">메인북으로 설정</option>
-                                <option value="sub">서브북으로 추가</option>
-                            </select>
-                            <button id="add-book-btn">추가하기</button>
-                        </div>
+                        <button id="start-goal-navigator-btn" class="btn">AI 목표 설정 시작하기</button>
                     </div>
-                </div>
-            </div>
-
-            <!-- ======================= REVIEW DECK VIEW ======================= -->
-            <div id="review-view" class="view">
-                <h2>장기기억 활성기 (Ebbinghaus Review Deck)</h2>
-                <div id="review-list" class="card"></div>
-            </div>
-
-            <!-- ======================= WRITING VIEW ======================= -->
-            <div id="writing-view" class="view">
-                <h2>지식의 대장간 (The Forge)</h2>
-                <div class="writing-layout card">
-                    <aside id="knowledge-sidebar">
-                        <h3>지식 조립기</h3>
-                        <div id="knowledge-cards-container"></div>
-                    </aside>
-                    <section id="writing-desk">
-                        <h3>글쓰기 데스크</h3>
-                        <input type="text" id="writing-title" placeholder="글 제목을 입력하세요...">
-                        <div class="writing-controls">
-                            <button id="ai-draft-btn">AI 초고 작성 (시뮬레이션)</button>
-                            <button id="save-asset-btn">자산으로 저장</button>
+                    <div class="sub-book-shelf-container card">
+                        <h3>📚 서브북 선반</h3>
+                        <div class="sub-book-shelf">
+                            <img src="https://image.aladin.co.kr/product/30883/29/cover500/k252830635_1.jpg" alt="책 표지1" class="sub-book-cover"><img src="https://image.aladin.co.kr/product/10/3/cover500/8932917248_2.jpg" alt="책 표지2" class="sub-book-cover"><img src="https://image.aladin.co.kr/product/33359/29/cover500/k252938250_1.jpg" alt="책 표지3" class="sub-book-cover"><img src="https://image.aladin.co.kr/product/1324/3/cover500/890120935x_1.jpg" alt="책 표지4" class="sub-book-cover"><img src="https://image.aladin.co.kr/product/29306/17/cover500/s972837389_1.jpg" alt="책 표지5" class="sub-book-cover">
                         </div>
-                        <textarea id="main-editor" placeholder="이곳에 글을 작성하거나, 왼쪽의 지식 카드를 클릭하여 내용을 추가하세요..."></textarea>
-                    </section>
-                </div>
-            </div>
-
-            <!-- ======================= SESSION VIEW ======================= -->
-            <div id="session-view" class="view"></div>
-
-            <!-- ======================= KNOWLEDGE LAB VIEW ======================= -->
-            <div id="lab-view" class="view">
-                <h2>지식 연구소</h2>
-                <div class="card">
-                    <h3>목표 달성 보드</h3>
-                    <div id="goal-board" class="kanban-board">
-                        <div class="kanban-column" id="todo-column" data-status="todo"><h4>진행 전</h4></div>
-                        <div class="kanban-column" id="inprogress-column" data-status="in-progress"><h4>진행 중</h4></div>
-                        <div class="kanban-column" id="completed-column" data-status="completed"><h4>달성 완료</h4></div>
                     </div>
                 </div>
-                <div class="card">
-                    <h3>시냅스 맵 (Synapse Map)</h3>
-                    <div id="synapse-map"></div>
+            </div>
+            
+            <div id="ebbinghaus" class="view">
+                <div id="garden-view">
+                    <header class="view-header">
+                        <h2>🌿 지식 정원</h2>
+                        <p>당신의 지식 식물들을 돌보며 장기기억을 수확하세요.</p>
+                    </header>
+                    <div class="garden-toolbar card">
+                        <div class="toolbar-status">
+                            <p><strong>총 식물:</strong> <span id="total-plants">0</span>개</p>
+                            <p><strong>돌봄 필요:</strong> <span id="needy-plants">0</span>개</p>
+                        </div>
+                        <button id="garden-water-all-btn" class="btn btn-primary">오늘의 정원 관리 시작하기</button>
+                    </div>
+                    <div id="garden-container" class="garden-container">
+                        </div>
+                </div>
+
+                <div id="dashboard-view" style="display: none;">
+                    <header class="view-header dashboard-header">
+                        <button id="back-to-garden-btn" class="btn btn-secondary">← 정원으로 돌아가기</button>
+                        <h2 id="dashboard-plant-title"></h2>
+                    </header>
+                    <div class="dashboard-content-grid">
+                        <div class="dashboard-chart-container card">
+                            <h3>기억 곡선 시뮬레이터</h3>
+                            <div class="chart-wrapper">
+                                <canvas id="memory-curve-chart"></canvas>
+                            </div>
+                        </div>
+                        <div class="dashboard-info-container">
+                            <div class="card">
+                                <h3>지식 상태 분석</h3>
+                                <div id="dashboard-stats">
+                                    </div>
+                            </div>
+                            <div class="card">
+                                <h3>전략적 선택</h3>
+                                <div id="dashboard-controls">
+                                    <button id="simulate-review-btn" class="btn">오늘 복습한다면? (시뮬레이션)</button>
+                                    <button id="start-review-btn" class="btn btn-primary">지금 바로 복습하기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            
+            <div id="metis-session" class="view"> <header class="view-header"> <button id="back-to-dashboard-btn" class="btn btn-secondary">← 대시보드로 돌아가기</button> <h2>🧠 메티스 학습 세션</h2> <p id="step-title">단계 1: 학습 예측</p> </header> <div class="session-content"> <div id="step-1" class="step active card"> <div id="session-goal-display" class="goal-display card"> </div> <h4>학습 예측 (Prediction)</h4> <p>위 목표와 관련하여 책에서 어떤 내용을 다룰 것 같습니까? 핵심 내용을 예측해보세요.</p> <textarea id="prediction-input" placeholder="예: 넛지의 개념을 설명하고, 사람들의 비합리적 선택을 유도하는 사례를 보여줄 것 같다."></textarea> <button class="btn btn-primary next-step-btn" data-next="2">예측 완료, 집중 독서 시작</button> </div> <div id="step-2" class="step card"> <h4>집중 독서 (Focused Reading)</h4> <p>이제 25분간 목표에만 집중하여 책을 읽습니다. 몰입을 위해 방해 요소를 제거하세요.</p> <div id="timer">25:00</div> <button class="btn btn-primary next-step-btn" data-next="3">독서 완료, 생각 기록하기</button> </div> <div id="step-3" class="step card"> <h4>생각 기록 (Brain Dump)</h4> <p>방금 읽은 내용과 그에 대한 당신의 생각을 5분간 자유롭게 기록하세요.</p> <textarea id="braindump-input" placeholder="정리되지 않아도 괜찮습니다. 떠오르는 모든 것을 기록하세요."></textarea> <button class="btn btn-primary next-step-btn" data-next="4">기록 완료, AI 피드백 예측하기</button> </div> <div id="step-4" class="step card"> <h4>AI 피드백 예측 (Metacognition)</h4> <p>AI가 당신의 기록에 대해 어떤 피드백을 줄 것 같습니까? 당신이 놓친 부분이나 잘못 이해한 부분은 무엇일까요?</p> <textarea id="ai-prediction-input" placeholder="예: 개념 설명은 잘했지만, 각 요소가 어떻게 상호작용하는지에 대한 설명이 부족하다고 지적할 것 같다."></textarea> <button class="btn btn-primary next-step-btn" data-next="5">예측 완료, 결과 확인하기</button> </div> <div id="step-5" class="step card"> <h4>비교 분석 (The Reveal)</h4> <p>자신의 이해도와 실제 이해도 사이의 격차(Gap)를 객관적으로 인지하세요.</p> <div class="comparison-grid"> <div class="comparison-col"><h5>🤔 내 생각</h5><div id="reveal-my-thoughts" class="comparison-content"></div></div> <div class="comparison-col"><h5>🤖 AI 피드백</h5><div id="reveal-ai-feedback" class="comparison-content ai-output"></div></div> <div class="comparison-col"><h5>🔮 내 예측</h5><div id="reveal-my-prediction" class="comparison-content"></div></div> <div class="comparison-col"><h5> A 전문가 요약</h5><div id="reveal-expert-summary" class="comparison-content ai-output"></div></div> </div> <button class="btn btn-primary next-step-btn" data-next="6">분석 완료, 핵심 질문 추출하기</button> </div> <div id="step-6" class="step card"> <h4>글쓰기를 위한 핵심 질문 추출</h4> <p>당신의 생각과 AI의 분석 사이에서 발견한 '격차(Gap)'는 무엇이었나요? 이 격차를 해소하는 것이 바로 글의 주제가 됩니다. 가장 핵심적인 질문 하나를 뽑아보세요.</p> <textarea id="gap-input" placeholder="예: 나는 개념의 나열에 그쳤지만, AI는 '개념 간의 연결성 부족'을 지적했다. 그렇다면, 각 개념들은 어떻게 유기적으로 연결되는가?"></textarea> <button class="btn btn-primary next-step-btn" data-next="7">질문 추출 완료, 체화 글쓰기 시작</button> </div> <div id="step-7" class="step card"> <h4>완벽한 체화를 위한 글쓰기</h4> <p>축하합니다! 이제 마지막 단계입니다. 방금 추출한 질문에 대한 답을 스스로 설명하는 한 편의 글을 완성하세요. 이 과정에서 당신의 지식은 비로소 응용 가능한 자산이 됩니다.</p> <textarea id="final-writing-input" class="final-writing" placeholder="6단계에서 뽑아낸 질문을 바탕으로, 오늘 배운 내용을 다른 사람에게 설명하듯 자유롭게 글을 작성해보세요."></textarea> <button id="finish-session-btn" class="btn btn-primary">글쓰기 완료, 지식 정원에 씨앗 심기</button> </div> </div> </div> <div id="knowledge-lab" class="view"> <header class="view-header"> <h2>지식 연구소</h2> <p>학습 기록을 연결하고, 자산으로 만들어 새로운 통찰을 발견하세요.</p> </header> <div class="lab-grid"> <div class="goal-board card"> <h3>🏆 목표 달성 보드</h3> <div class="kanban-board"> <div class="kanban-col"> <h4>진행 중</h4> <div class="kanban-card">넛지 - 선택 설계 3요소 설명하기</div> </div> <div class="kanban-col"> <h4>달성 완료</h4> <div class="kanban-card">역행자 - 자의식 해체 개념 요약하기</div> <div class="kanban-card">클루지 - 점진적 진화의 맹점 2가지 서술</div> </div> </div> </div> <div class="synapse-map card"> <h3>🗺️ 시냅스 맵</h3> <p>학습한 개념들이 어떻게 연결되는지 탐험해보세요. (디자인 예시)</p> <img src="https://i.imgur.com/2jZ4s6x.png" alt="시냅스 맵 예시" style="width: 100%; opacity: 0.7;"> </div> <div class="writing-archive card"> <h3>✍️ 글쓰기 아카이브</h3> <ul> <li><a href="#">[넛지] 디폴트 옵션의 힘과 나의 일상</a> <span>2025-09-26</span></li> <li><a href="#">[역행자] 자의식 해체를 통한 문제 해결</a> <span>2025-09-24</span></li> </ul> </div> </div> </div>
         </main>
     </div>
 
-    <!-- Goal Modal -->
-    <div id="goal-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h3>메인북 목표 설정</h3>
-            <select id="goal-level">
-                <option value="1">레벨 1: 핵심 개념 단위</option>
-                <option value="2">레벨 2: 주제 묶음 단위</option>
-                <option value="3">레벨 3: 저자의 관점 단위</option>
-            </select>
-            <textarea id="goal-text" placeholder="이 책을 통해 무엇을 얻고 싶으신가요? (예: 선택 설계의 3요소 설명하기)"></textarea>
-            <button id="save-goal-btn">목표 저장</button>
+    <div id="challenge-modal-overlay" class="modal-overlay">
+        <div id="challenge-modal" class="modal-content"></div>
+    </div>
+    <div id="goal-navigator-modal-overlay" class="modal-overlay">
+        <div id="goal-navigator-modal" class="modal-content">
+            <div id="goal-navigator-content"></div>
         </div>
     </div>
-    
-    <!-- Curiosity Modal (NEW) -->
-    <div id="curiosity-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h3>🧠 호기심 촉진기</h3>
-            <p id="curiosity-question">AI의 예측 질문이 여기에 표시됩니다.</p>
-            <textarea id="curiosity-answer" placeholder="당신의 예측을 한 문장으로..."></textarea>
-            <button id="start-learning-btn">예측 완료 & 학습 시작</button>
-        </div>
+    <div id="loader" class="loader-overlay">
+        <div class="loader"></div>
+        <p>AI가 분석 중입니다...</p>
     </div>
 
-    <script src="app.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
-
